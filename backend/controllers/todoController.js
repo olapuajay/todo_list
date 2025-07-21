@@ -22,3 +22,26 @@ export const getTasks = async (req, res) => {
     res.status(500).json({ message: "something went wrong" });
   }
 }
+
+export const updateTask = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { title, status } = req.body;
+    const updatedTask = await todoModel.findByIdAndUpdate(id, { title, status });
+    res.status(200).json({ message: "Task updated successfully!", updatedTask });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
+
+export const deleteTask = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedTask = await todoModel.findByIdAndDelete(id);
+    res.status(200).json({ message: "Task deleted successfully!" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
